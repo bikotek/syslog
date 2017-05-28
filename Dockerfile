@@ -22,6 +22,11 @@ RUN mkdir /var/log/rsyslog
 
 RUN chown syslog:syslog /var/log/rsyslog/
 
+RUN echo "# watch for error" > /etc/swatch.conf
+RUN echo "watchfor /firewall/" >> /etc/swatch.conf
+RUN echo "        echo" >> /etc/swatch.conf
+RUN echo "        exec = sh /slack-syslog.sh "$_"" >> /etc/swatch.conf
+
 ADD start.sh /bin
 RUN /bin/chmod +x /bin/start.sh
 
